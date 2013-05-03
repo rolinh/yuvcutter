@@ -1,0 +1,84 @@
+yuvcutter(1) -- cut frames from raw yuv video files
+===================================================
+
+## SYNOPSIS
+
+`yuvcutter` [OPTION(S)] [-F FILENAME] [-H HEIGHT] [-M YUV_MODE] [-N NB_FRAMES]
+[-W WIDTH]
+
+## DESCRIPTION
+
+**yuvcutter** cuts the first "N" frames from raw YUV video files. "N" is equal
+to "1" by default but you can easily change it using `-N` option.
+YUV supported format are 4:2:0, 4:2:2 and 4:4:4.
+Note that as this YUV files are raw files with no information on content, you
+need to specify the video width and height in order for **yuvcutter** to behave
+as expected. By default, it assumes the input video is "1920x1080".
+
+## OPTIONS
+
+Common options:
+
+  * `-h`:
+    Show this help and exit.
+
+  * `-v`:
+    Activate verbose mode.
+
+  * `-V`:
+    Show program version and exit.
+
+Specific options:
+
+  * `-F FILENAME`:
+    Specify FILENAME as input YUV file. Default is set to "input.yuv".
+
+  * `-H HEIGHT`:
+    Specify video height. Default is set to "1080".
+
+  * `-M YUV_MODE`:
+    Specify YUV mode used. Possible values are "420", "422" and "444".
+    Default is set to "420".
+
+  * `-N NB_FRAMES`:
+    Specify the number of frames to cut. Default is set to "1".
+
+  * `-W WIDTH`:
+    Specify video width. Default is set to "1920".
+
+
+## FILES
+
+`yuvcutter` expects input files to be non compressed YUV raw video files. They
+typically have a `.yuv` extension.
+
+## KNOWN LIMITATIONS
+
+Due to some limitations of the C language (and me being lazy about dealing
+with it), you will not be able to cut a very large number of frames.
+On most computer, this mean that you will not be able to cut more than the
+number of frames representing the first 512M of the YUV file.
+One workaround, if you really want to cut a whole lot of frames, is to run this
+program several times over the output YUV file.
+
+## BUGS
+
+Please, report any bug you encounter either directly on the official website:
+<http://projects.gw-computing.net/projects/yuvcutter>
+or by sending an email to the author.
+
+## AUTHORS
+
+Robin Hahling <robin.hahling@gw-computing.net>
+
+## COPYRIGHT
+
+Copyright (C) 2013 Robin Hahling
+
+## LICENSE
+
+BSD 3-clause
+
+## SEE ALSO
+
+ffmpeg(1)

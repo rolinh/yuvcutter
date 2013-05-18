@@ -172,7 +172,7 @@ cut(char *filename, unsigned int height, unsigned int width,
 			goto close_fd;
 		}
 		j += i;
-		(void)printf("\rWriting (%dkb)", j);
+		(void)printf("\rWriting (%db)", j);
 	}
 	(void)printf("\nDone writing to ./cut.yuv\n");
 

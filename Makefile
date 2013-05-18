@@ -15,6 +15,7 @@ CFDEBUG = -O0 -g3 -pedantic -Wall -Wextra -Wconversion -Wstrict-prototypes \
 		  -Wno-long-long -pipe -Wunreachable-code
 
 EXEC = yuvcutter
+VERSION = 0.1.0
 
 MAN=man
 MAN1=man1
@@ -39,7 +40,7 @@ ${EXEC}: ${OBJS}
 	${CC} -o ${EXEC} ${OBJS} ${LDFLAGS}
 
 doc:
-	${RONN} -r --manual "USER COMMANDS" --pipe --organization "Robin Hahling" ${MAN}/${EXEC}.1.ronn > ${MAN}/${MAN1}/${EXEC}.1
+	${RONN} -r --manual "USER COMMANDS" --pipe --organization "${EXEC} ${VERSION}" ${MAN}/${EXEC}.1.ronn > ${MAN}/${MAN1}/${EXEC}.1
 
 install-main: ${EXEC}
 	${TEST} -d ${DESTDIR}${BINDIR} || ${MKDIR} -p ${DESTDIR}${BINDIR}

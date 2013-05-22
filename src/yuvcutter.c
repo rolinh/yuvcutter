@@ -59,9 +59,9 @@ main(int argc, char *argv[])
 	unsigned int width = 1920;
 	unsigned int height = 1080;
 	unsigned int nb_frames = 1;
-	unsigned int frame_count;
 	int yuv_mode = 420;
 	char *filename = "input.yuv";
+	struct yuv_file *video;
 
 	if (argv[1] && argv[1][0] != '-') {
 		filename = argv[1];
@@ -119,10 +119,10 @@ main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
-	if ((frame_count = count(filename, height, width, yuv_mode)) == 0)
+	if (!(video = count(filename, height, width, yuv_mode, nb_frames)))
 		return EXIT_FAILURE;
 
-	if (nb_frames >= frame_count) {
+	if (nb_frames >= video->frame_count) {
 		(void)fprintf(stderr, "You cannot cut the same amount or more "
 			      "frames than there actually is in the video.\n");
 		return EXIT_FAILURE;
@@ -130,26 +130,37 @@ main(int argc, char *argv[])
 
 	if (verboseflag)
 		print_options(filename, height, width, nb_frames, yuv_mode,
-			      countflag, frame_count);
+			      countflag, video->frame_count);
 
 	if (countflag) {
 		(void)printf("Number of frames in %s: %ld\n",
-			     filename, frame_count);
+			     filename, video->frame_count);
 	} else {
-		if (cut(filename, height, width, nb_frames, yuv_mode) == -1)
+		if (cut(filename, height, width, nb_frames, yuv_mode, video)
+				== -1)
 			return EXIT_FAILURE;
 	}
+
+	free(video);
 
 	return EXIT_SUCCESS;
 }
 
-unsigned int
-count(char *filename, unsigned int height, unsigned int width, int yuv_mode)
+struct yuv_file *
+count(char *filename, unsigned int height, unsigned int width, int yuv_mode,
+      unsigned int nb_frames)
 {
+	struct yuv_file *ret;
 	struct stat st;
 	off_t frame_weight;
 	off_t frame_size = (off_t)width * (off_t)height;
 	unsigned int frame_count;
+
+	if (!(ret = malloc(sizeof(struct yuv_file)))) {
+		(void)fprintf(stderr, "Cannot allocate memory for yuv_file "
+			      "structure\n");
+		return NULL;
+	}
 
 	if (yuv_mode == 420)
 		frame_weight = ((frame_size * 3) / 2);
@@ -159,23 +170,25 @@ count(char *filename, unsigned int height, unsigned int width, int yuv_mode)
 		frame_weight = (frame_size * 3);
 	else {
 		(void)fprintf(stderr, "Unsupported YUV mode: %d\n", yuv_mode);
-		return 0;
+		return NULL;
 	}
 
 	if (stat(filename, &st) == -1) {
 		(void)fprintf(stderr, "Cannot stat %s: ", filename);
 		perror("");
-		return 0;
+		return NULL;
 	}
-	frame_count = (unsigned int)st.st_size / (unsigned int)frame_weight;
 
+	ret->frame_count = (unsigned int)st.st_size / (unsigned int)frame_weight;
+	ret->size_origin = st.st_size;
+	ret->size_new = ret->size_origin - ((off_t)nb_frames * frame_weight);
 
-	return frame_count;
+	return ret;
 }
 
 int
 cut(char *filename, unsigned int height, unsigned int width,
-    unsigned int nb_frames, int yuv_mode)
+    unsigned int nb_frames, int yuv_mode, struct yuv_file *video)
 {
 	FILE *yuvfile;
 	FILE *fout;
@@ -226,7 +239,8 @@ cut(char *filename, unsigned int height, unsigned int width,
 			goto close_fd;
 		}
 		j += i;
-		(void)printf("\rWriting (%db)", j);
+		(void)printf("\rWriting %.f%% (%db)",
+			     (double)j / (double)video->size_new * 100.0, j);
 	}
 	(void)printf("\nDone writing to ./cut.yuv\n");
 

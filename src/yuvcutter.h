@@ -39,11 +39,17 @@
 
 #define VERSION "0.1.0"
 
+struct yuv_file {
+	unsigned int frame_count;
+	off_t size_origin;
+	off_t size_new;
+};
+
 /* functions declaration */
-unsigned int count(char *filename, unsigned int height, unsigned int width,
-		   int yuv_mode);
+struct yuv_file * count(char *filename, unsigned int height, unsigned int width,
+		      int yuv_mode, unsigned int nb_frames);
 int cut(char *filename, unsigned int height, unsigned int width,
-	unsigned int nb_frames, int yuv_mode);
+	unsigned int nb_frames, int yuv_mode, struct yuv_file *video);
 int check_yuvfile(char *filename);
 void print_options(char *filename, unsigned int height, unsigned int width,
 		   unsigned int nb_frames, int yuv_mode, int countflag,

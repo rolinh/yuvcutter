@@ -17,6 +17,9 @@ exactly the same frame each. Here comes **yuvcutter** as it allows you to cut
 the first "N" frames of your reference video file so your both YUV files start
 with the same video frame.
 
+**yuvcutter** has also the ability to display the number of frames contained in
+the YUV video file.
+
 # BUILD
 
 **yuvcutter** has not dependy apart from the standard C library.
@@ -32,7 +35,7 @@ To generate the manpage, type the following:
 Please, note that you normally do not have to generate the manual page since I
 keep an updated copy in man/man1 directory. However, if you want to regenerate
 the manpage, you will need to have the `ronn` tool installed on your machine
-(`ronn` can be installed as a gem by typing `gem install ronn`).
+(`ronn` can be installed as a Ruby gem by typing `gem install ronn`).
 
 If you want to install **yuvcutter** on your system, simply type the following:
 

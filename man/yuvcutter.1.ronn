@@ -3,17 +3,22 @@ yuvcutter(1) -- cut frames from raw yuv video files
 
 ## SYNOPSIS
 
-`yuvcutter` [OPTION(S)] [-F FILENAME] [-H HEIGHT] [-M YUV_MODE] [-N NB_FRAMES]
-[-W WIDTH]
+`yuvcutter` [video.yuv] [OPTION(S)] [-C] [-H HEIGHT] [-M YUV_MODE]
+[-N NB_FRAMES] [-W WIDTH]
 
 ## DESCRIPTION
 
-**yuvcutter** cuts the first "N" frames from raw YUV video files. "N" is equal
-to "1" by default but you can easily change it using `-N` option.
-YUV supported format are 4:2:0, 4:2:2 and 4:4:4.
+**yuvcutter** cuts the first "N" frames from raw YUV video files (`video.yuv`).
+If no video is specified as input, **yuvcutter** assumes that the input video is
+"input.yuv".
+"N" is equal to "1" by default but you can easily change it using `-N` option.
+YUV supported format are 4:2:0, 4:2:2 and 4:4:4. Default is set to 4:2:0.
 Note that as this YUV files are raw files with no information on content, you
 need to specify the video width and height in order for **yuvcutter** to behave
 as expected. By default, it assumes the input video is "1920x1080".
+
+**yuvcutter** has also the ability to display the number of frames of the YUV
+file by using `-C` option.
 
 ## OPTIONS
 
@@ -30,8 +35,9 @@ Common options:
 
 Specific options:
 
-  * `-F FILENAME`:
-    Specify FILENAME as input YUV file. Default is set to "input.yuv".
+  * `-C`
+    Count the number of frames in the YUV file.
+    It does not cut any frame from the video but just display this information.
 
   * `-H HEIGHT`:
     Specify video height. Default is set to "1080".
@@ -42,6 +48,7 @@ Specific options:
 
   * `-N NB_FRAMES`:
     Specify the number of frames to cut. Default is set to "1".
+    This option is ignored when `-C` option is triggered.
 
   * `-W WIDTH`:
     Specify video width. Default is set to "1920".

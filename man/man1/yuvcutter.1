@@ -7,10 +7,13 @@
 \fByuvcutter\fR \- cut frames from raw yuv video files
 .
 .SH "SYNOPSIS"
-\fByuvcutter\fR [OPTION(S)] [\-F FILENAME] [\-H HEIGHT] [\-M YUV_MODE] [\-N NB_FRAMES] [\-W WIDTH]
+\fByuvcutter\fR [video\.yuv] [OPTION(S)] [\-C] [\-H HEIGHT] [\-M YUV_MODE] [\-N NB_FRAMES] [\-W WIDTH]
 .
 .SH "DESCRIPTION"
-\fByuvcutter\fR cuts the first "N" frames from raw YUV video files\. "N" is equal to "1" by default but you can easily change it using \fB\-N\fR option\. YUV supported format are 4:2:0, 4:2:2 and 4:4:4\. Note that as this YUV files are raw files with no information on content, you need to specify the video width and height in order for \fByuvcutter\fR to behave as expected\. By default, it assumes the input video is "1920x1080"\.
+\fByuvcutter\fR cuts the first "N" frames from raw YUV video files (\fBvideo\.yuv\fR)\. If no video is specified as input, \fByuvcutter\fR assumes that the input video is "input\.yuv"\. "N" is equal to "1" by default but you can easily change it using \fB\-N\fR option\. YUV supported format are 4:2:0, 4:2:2 and 4:4:4\. Default is set to 4:2:0\. Note that as this YUV files are raw files with no information on content, you need to specify the video width and height in order for \fByuvcutter\fR to behave as expected\. By default, it assumes the input video is "1920x1080"\.
+.
+.P
+\fByuvcutter\fR has also the ability to display the number of frames of the YUV file by using \fB\-C\fR option\.
 .
 .SH "OPTIONS"
 Common options:
@@ -30,25 +33,22 @@ Show program version and exit\.
 .P
 Specific options:
 .
-.TP
-\fB\-F FILENAME\fR
-Specify FILENAME as input YUV file\. Default is set to "input\.yuv"\.
+.IP "\(bu" 4
+\fB\-C\fR Count the number of frames in the YUV file\. It does not cut any frame from the video but just display this information\.
 .
-.TP
-\fB\-H HEIGHT\fR
-Specify video height\. Default is set to "1080"\.
+.IP "\(bu" 4
+\fB\-H HEIGHT\fR: Specify video height\. Default is set to "1080"\.
 .
-.TP
-\fB\-M YUV_MODE\fR
-Specify YUV mode used\. Possible values are "420", "422" and "444"\. Default is set to "420"\.
+.IP "\(bu" 4
+\fB\-M YUV_MODE\fR: Specify YUV mode used\. Possible values are "420", "422" and "444"\. Default is set to "420"\.
 .
-.TP
-\fB\-N NB_FRAMES\fR
-Specify the number of frames to cut\. Default is set to "1"\.
+.IP "\(bu" 4
+\fB\-N NB_FRAMES\fR: Specify the number of frames to cut\. Default is set to "1"\. This option is ignored when \fB\-C\fR option is triggered\.
 .
-.TP
-\fB\-W WIDTH\fR
-Specify video width\. Default is set to "1920"\.
+.IP "\(bu" 4
+\fB\-W WIDTH\fR: Specify video width\. Default is set to "1920"\.
+.
+.IP "" 0
 .
 .SH "FILES"
 \fByuvcutter\fR expects input files to be non compressed YUV raw video files\. They typically have a \fB\.yuv\fR extension\.

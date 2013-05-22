@@ -198,7 +198,7 @@ cut(char *filename, unsigned int height, unsigned int width,
 	}
 
 	if (fseek(yuvfile, (long)offset, SEEK_SET) == -1) {
-		(void)fprintf(stderr, "Cannot seek to position %l: ",
+		(void)fprintf(stderr, "Cannot seek to position %ld: ",
 			      (long)offset);
 		perror("");
 		ret = -1;

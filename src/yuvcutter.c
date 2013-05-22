@@ -133,7 +133,7 @@ main(int argc, char *argv[])
 			      countflag, video->frame_count);
 
 	if (countflag) {
-		(void)printf("Number of frames in %s: %ld\n",
+		(void)printf("Number of frames in %s: %u\n",
 			     filename, video->frame_count);
 	} else {
 		if (cut(filename, height, width, nb_frames, yuv_mode, video)
@@ -239,7 +239,7 @@ cut(char *filename, unsigned int height, unsigned int width,
 			goto close_fd;
 		}
 		j += i;
-		(void)printf("\rWriting %.f%% (%db)",
+		(void)printf("\rWriting %.f%% (%lub)",
 			     (double)j / (double)video->size_new * 100.0, j);
 	}
 	(void)printf("\nDone writing to ./cut.yuv\n");

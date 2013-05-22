@@ -45,7 +45,7 @@ int cut(char *filename, unsigned int height, unsigned int width,
 	unsigned int nb_frames, int yuv_mode);
 int check_yuvfile(char *filename);
 void print_options(char *filename, unsigned int height, unsigned int width,
-		   unsigned int nb_frames, int yuv_mode);
+		   unsigned int nb_frames, int yuv_mode, int countflag);
 void usage(int status);
 
 #endif /* ndef H_YUVCUTTER */

@@ -118,7 +118,8 @@ main(int argc, char *argv[])
 	}
 
 	if (verboseflag)
-		print_options(filename, height, width, nb_frames, yuv_mode);
+		print_options(filename, height, width, nb_frames, yuv_mode,
+			      countflag);
 
 	if (countflag) {
 		if (count(filename, height, width, yuv_mode) == -1)
@@ -251,14 +252,15 @@ check_yuvfile(char *filename)
 
 void
 print_options(char *filename, unsigned int height, unsigned int width,
-	      unsigned int nb_frames, int yuv_mode)
+	      unsigned int nb_frames, int yuv_mode, int countflag)
 {
 
 	(void)printf("   Input file name: %s\n", filename);
 	(void)printf("            Height: %u\n", height);
 	(void)printf("             Width: %u\n", width);
-	(void)printf("# of frames to cut: %u\n", nb_frames);
-	(void)printf("          YUV mode: %u\n\n", yuv_mode);
+	(void)printf("          YUV mode: %u\n", yuv_mode);
+	if (!countflag)
+		(void)printf("# of frames to cut: %u\n\n", nb_frames);
 }
 
 void

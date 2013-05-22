@@ -62,6 +62,10 @@ main(int argc, char *argv[])
 	int yuv_mode = 420;
 	char *filename = "input.yuv";
 
+	if (argv[1] && argv[1][0] != '-') {
+		filename = argv[1];
+	}
+
 	while ((ch = getopt(argc, argv, "hvCF:H:M:N:VW:")) != -1) {
 		switch(ch) {
 		case 'h':
@@ -72,9 +76,6 @@ main(int argc, char *argv[])
 			break;
 		case 'C':
 			countflag = 1;
-			break;
-		case 'F':
-			filename = strdup(optarg);
 			break;
 		case 'H':
 			height = (unsigned int)strtoul(optarg, NULL, 10);

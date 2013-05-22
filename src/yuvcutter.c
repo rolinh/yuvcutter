@@ -122,6 +122,12 @@ main(int argc, char *argv[])
 	if ((frame_count = count(filename, height, width, yuv_mode)) == 0)
 		return EXIT_FAILURE;
 
+	if (nb_frames >= frame_count) {
+		(void)fprintf(stderr, "You cannot cut the same amount or more "
+			      "frames than there actually is in the video.\n");
+		return EXIT_FAILURE;
+	}
+
 	if (verboseflag)
 		print_options(filename, height, width, nb_frames, yuv_mode,
 			      countflag, frame_count);

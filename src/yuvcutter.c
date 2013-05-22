@@ -59,6 +59,7 @@ main(int argc, char *argv[])
 	unsigned int width = 1920;
 	unsigned int height = 1080;
 	unsigned int nb_frames = 1;
+	unsigned int frame_count;
 	int yuv_mode = 420;
 	char *filename = "input.yuv";
 
@@ -118,13 +119,16 @@ main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
+	if ((frame_count = count(filename, height, width, yuv_mode)) == 0)
+		return EXIT_FAILURE;
+
 	if (verboseflag)
 		print_options(filename, height, width, nb_frames, yuv_mode,
-			      countflag);
+			      countflag, frame_count);
 
 	if (countflag) {
-		if (count(filename, height, width, yuv_mode) == -1)
-			return EXIT_FAILURE;
+		(void)printf("Number of frames in %s: %ld\n",
+			     filename, frame_count);
 	} else {
 		if (cut(filename, height, width, nb_frames, yuv_mode) == -1)
 			return EXIT_FAILURE;
@@ -133,12 +137,13 @@ main(int argc, char *argv[])
 	return EXIT_SUCCESS;
 }
 
-int
+unsigned int
 count(char *filename, unsigned int height, unsigned int width, int yuv_mode)
 {
 	struct stat st;
 	off_t frame_weight;
 	off_t frame_size = (off_t)width * (off_t)height;
+	unsigned int frame_count;
 
 	if (yuv_mode == 420)
 		frame_weight = ((frame_size * 3) / 2);
@@ -148,19 +153,18 @@ count(char *filename, unsigned int height, unsigned int width, int yuv_mode)
 		frame_weight = (frame_size * 3);
 	else {
 		(void)fprintf(stderr, "Unsupported YUV mode: %d\n", yuv_mode);
-		return -1;
+		return 0;
 	}
 
 	if (stat(filename, &st) == -1) {
 		(void)fprintf(stderr, "Cannot stat %s: ", filename);
 		perror("");
-		return -1;
+		return 0;
 	}
-	(void)printf("Number of frames in %s: %ld\n",
-		     filename,
-		     st.st_size / frame_weight);
+	frame_count = (unsigned int)st.st_size / (unsigned int)frame_weight;
 
-	return 0;
+
+	return frame_count;
 }
 
 int
@@ -253,15 +257,20 @@ check_yuvfile(char *filename)
 
 void
 print_options(char *filename, unsigned int height, unsigned int width,
-	      unsigned int nb_frames, int yuv_mode, int countflag)
+	      unsigned int nb_frames, int yuv_mode, int countflag,
+	      unsigned int frame_count)
 {
 
-	(void)printf("   Input file name: %s\n", filename);
-	(void)printf("            Height: %u\n", height);
-	(void)printf("             Width: %u\n", width);
-	(void)printf("          YUV mode: %u\n", yuv_mode);
-	if (!countflag)
-		(void)printf("# of frames to cut: %u\n\n", nb_frames);
+	(void)printf("           Input file name: %s\n", filename);
+	(void)printf("                    Height: %u\n", height);
+	(void)printf("                     Width: %u\n", width);
+	(void)printf("                  YUV mode: %u\n", yuv_mode);
+	(void)printf("          Number of frames: %u\n", frame_count);
+	if (!countflag) {
+		(void)printf("        # of frames to cut: %u\n", nb_frames);
+		(void)printf("Resulting number of frames: %u\n\n",
+			     frame_count - nb_frames);
+	}
 }
 
 void

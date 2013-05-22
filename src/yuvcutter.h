@@ -40,12 +40,14 @@
 #define VERSION "0.1.0"
 
 /* functions declaration */
-int count(char *filename, unsigned int height, unsigned int width, int yuv_mode);
+unsigned int count(char *filename, unsigned int height, unsigned int width,
+		   int yuv_mode);
 int cut(char *filename, unsigned int height, unsigned int width,
 	unsigned int nb_frames, int yuv_mode);
 int check_yuvfile(char *filename);
 void print_options(char *filename, unsigned int height, unsigned int width,
-		   unsigned int nb_frames, int yuv_mode, int countflag);
+		   unsigned int nb_frames, int yuv_mode, int countflag,
+		   unsigned int frame_count);
 void usage(int status);
 
 #endif /* ndef H_YUVCUTTER */

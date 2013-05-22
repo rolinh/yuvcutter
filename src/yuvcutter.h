@@ -40,6 +40,7 @@
 #define VERSION "0.1.0"
 
 /* functions declaration */
+int count(char *filename, unsigned int height, unsigned int width, int yuv_mode);
 int cut(char *filename, unsigned int height, unsigned int width,
 	unsigned int nb_frames, int yuv_mode);
 int check_yuvfile(char *filename);

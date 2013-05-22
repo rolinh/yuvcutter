@@ -41,6 +41,9 @@
 #include <string.h>
 #include <getopt.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include "yuvcutter.h"
 
 #define _XOPEN_SOURCE 600
@@ -52,19 +55,23 @@ main(int argc, char *argv[])
 	int helpflag = 0;
 	int verboseflag = 0;
 	int versionflag = 0;
+	int countflag = 0;
 	unsigned int width = 1920;
 	unsigned int height = 1080;
 	unsigned int nb_frames = 1;
 	int yuv_mode = 420;
 	char *filename = "input.yuv";
 
-	while ((ch = getopt(argc, argv, "hvF:H:M:N:VW:")) != -1) {
+	while ((ch = getopt(argc, argv, "hvCF:H:M:N:VW:")) != -1) {
 		switch(ch) {
 		case 'h':
 			helpflag = 1;
 			break;
 		case 'v':
 			verboseflag = 1;
+			break;
+		case 'C':
+			countflag = 1;
 			break;
 		case 'F':
 			filename = strdup(optarg);
@@ -113,10 +120,45 @@ main(int argc, char *argv[])
 	if (verboseflag)
 		print_options(filename, height, width, nb_frames, yuv_mode);
 
-	if (cut(filename, height, width, nb_frames, yuv_mode) == -1)
-		return EXIT_FAILURE;
+	if (countflag) {
+		if (count(filename, height, width, yuv_mode) == -1)
+			return EXIT_FAILURE;
+	} else {
+		if (cut(filename, height, width, nb_frames, yuv_mode) == -1)
+			return EXIT_FAILURE;
+	}
 
 	return EXIT_SUCCESS;
+}
+
+int
+count(char *filename, unsigned int height, unsigned int width, int yuv_mode)
+{
+	struct stat st;
+	off_t frame_weight;
+	off_t frame_size = (off_t)width * (off_t)height;
+
+	if (yuv_mode == 420)
+		frame_weight = ((frame_size * 3) / 2);
+	else if (yuv_mode == 422)
+		frame_weight = (frame_size * 2);
+	else if (yuv_mode == 444)
+		frame_weight = (frame_size * 3);
+	else {
+		(void)fprintf(stderr, "Unsupported YUV mode: %d\n", yuv_mode);
+		return -1;
+	}
+
+	if (stat(filename, &st) == -1) {
+		(void)fprintf(stderr, "Cannot stat %s: ", filename);
+		perror("");
+		return -1;
+	}
+	(void)printf("Number of frames in %s: %ld\n",
+		     filename,
+		     st.st_size / frame_weight);
+
+	return 0;
 }
 
 int
@@ -233,6 +275,7 @@ usage(int status)
 			"\t-v\t\tActivate verbose mode\n"
 			"\t-V\t\tShow program version and exit\n\n"
 			"Specific options:\n"
+			"\t-C\t\tCount the number of frames in the input file\n"
 			"\t-F FILENAME\tSpecify input file\n"
 			"\t-H HEIGHT\tSpecify video height\n"
 			"\t-M YUV_MODE\tSpecify YUV mode (420, 422 or 444)\n"

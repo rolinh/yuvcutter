@@ -231,6 +231,8 @@ cut(char *filename, unsigned int height, unsigned int width,
 	}
 
 	(void)printf("Please, wait while writing to file...\n");
+	/* hide cursor */
+	(void)printf("\033[?25l");
 	while (!feof(yuvfile)) {
 		i = fread(buf, 1, BUFSIZ, yuvfile);
 		if (fwrite(buf, 1, i, fout) != i) {
@@ -243,6 +245,8 @@ cut(char *filename, unsigned int height, unsigned int width,
 			     (double)j / (double)video->size_new * 100.0, j);
 	}
 	(void)printf("\nDone writing to ./cut.yuv\n");
+	/* show the cursor again */
+	(void)printf("\033[?25h");
 
 close_fd:
 	if (fclose(yuvfile) == EOF) {

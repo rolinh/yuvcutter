@@ -245,7 +245,7 @@ cut(char *filename, unsigned int height, unsigned int width,
 		perct = (double)j / (double)video->size_new * 100.0;
 		(void)printf("\r%.f%% ", perct);
 		disp_perct_bar(perct);
-		(void)printf(" (%lu b)", j);
+		(void)printf(" (%lu)", j);
 	}
 	(void)printf("\nDone writing to ./cut.yuv\n");
 	/* show the cursor again */

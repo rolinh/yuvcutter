@@ -196,6 +196,7 @@ cut(char *filename, unsigned int height, unsigned int width,
 	int ret = 0;
 	size_t i;
 	size_t j = 0;
+	double perct;
 	unsigned char buf[BUFSIZ];
 	unsigned int frame_size = width * height;
 
@@ -241,8 +242,10 @@ cut(char *filename, unsigned int height, unsigned int width,
 			goto close_fd;
 		}
 		j += i;
-		(void)printf("\rWriting %.f%% (%lub)",
-			     (double)j / (double)video->size_new * 100.0, j);
+		perct = (double)j / (double)video->size_new * 100.0;
+		(void)printf("\r%.f%% ", perct);
+		disp_perct_bar(perct);
+		(void)printf(" (%lu b)", j);
 	}
 	(void)printf("\nDone writing to ./cut.yuv\n");
 	/* show the cursor again */
@@ -295,6 +298,20 @@ print_options(char *filename, unsigned int height, unsigned int width,
 		(void)printf("Resulting number of frames: %u\n\n",
 			     frame_count - nb_frames);
 	}
+}
+
+void
+disp_perct_bar(double perct)
+{
+	int i, j;
+	int barinc = 5;
+
+	(void)putchar('[');
+	for (i = 0; i < perct; i += barinc)
+		(void)putchar('#');
+	for (j = i; j < 100; j += barinc)
+		(void)putchar(' ');
+	(void)putchar(']');
 }
 
 void

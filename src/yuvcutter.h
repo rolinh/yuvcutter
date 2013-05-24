@@ -54,6 +54,8 @@ int check_yuvfile(char *filename);
 void print_options(char *filename, unsigned int height, unsigned int width,
 		   unsigned int nb_frames, int yuv_mode, int countflag,
 		   unsigned int frame_count);
+
+void disp_perct_bar(double perct);
 void usage(int status);
 
 #endif /* ndef H_YUVCUTTER */

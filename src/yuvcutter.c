@@ -320,7 +320,7 @@ usage(int status)
 	if (status != 0)
 		(void)fprintf(stderr, "Try yuvcutter -h for more info\n");
 	else {
-		(void)printf("Usage: yuvcutter [OPTION(S)] [-F FILENAME] "
+		(void)printf("Usage:\nyuvcutter [input.yuv] [OPTION(S)] [-C] "
 			     "[-H HEIGHT] [-M YUV_MODE] [-N NB_FRAMES] "
 			     "[-W WIDTH]\n\n"
 			"Common options:\n"
@@ -329,7 +329,6 @@ usage(int status)
 			"\t-V\t\tShow program version and exit\n\n"
 			"Specific options:\n"
 			"\t-C\t\tCount the number of frames in the input file\n"
-			"\t-F FILENAME\tSpecify input file\n"
 			"\t-H HEIGHT\tSpecify video height\n"
 			"\t-M YUV_MODE\tSpecify YUV mode (420, 422 or 444)\n"
 			"\t-N NB_FRAMES\tSpecify the number of frames to cut\n"

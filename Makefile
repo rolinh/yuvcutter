@@ -15,7 +15,7 @@ CFDEBUG = -O0 -g3 -pedantic -Wall -Wextra -Wconversion -Wstrict-prototypes \
 		  -Wno-long-long -pipe -Wunreachable-code
 
 EXEC = yuvcutter
-VERSION = 0.3.0
+VERSION = 0.3.1
 
 MAN=man
 MAN1=man1

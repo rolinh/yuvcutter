@@ -154,7 +154,6 @@ count(char *filename, unsigned int height, unsigned int width, int yuv_mode,
 	struct stat st;
 	off_t frame_weight;
 	off_t frame_size = (off_t)width * (off_t)height;
-	unsigned int frame_count;
 
 	if (!(ret = malloc(sizeof(struct yuv_file)))) {
 		(void)fprintf(stderr, "Cannot allocate memory for yuv_file "

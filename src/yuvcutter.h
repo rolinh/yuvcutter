@@ -46,14 +46,14 @@ struct yuv_file {
 };
 
 /* functions declaration */
-struct yuv_file * count(char *filename, unsigned int height, unsigned int width,
-		      int yuv_mode, unsigned int nb_frames);
-int cut(char *filename, unsigned int height, unsigned int width,
-	unsigned int nb_frames, int yuv_mode, struct yuv_file *video);
-int check_yuvfile(char *filename);
-void print_options(char *filename, unsigned int height, unsigned int width,
-		   unsigned int nb_frames, int yuv_mode, int countflag,
-		   unsigned int frame_count);
+struct yuv_file * count(const char *filename, unsigned int height,
+    unsigned int width, int yuv_mode, unsigned int nb_frames);
+int cut(const char *filename, unsigned int height, unsigned int width,
+    unsigned int nb_frames, int yuv_mode, struct yuv_file *video);
+int check_yuvfile(const char *filename);
+void print_options(const char *filename, unsigned int height,
+    unsigned int width, unsigned int nb_frames, int yuv_mode, int countflag,
+    unsigned int frame_count);
 
 void disp_perct_bar(double perct);
 void usage(int status);

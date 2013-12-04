@@ -147,8 +147,8 @@ main(int argc, char *argv[])
 }
 
 struct yuv_file *
-count(char *filename, unsigned int height, unsigned int width, int yuv_mode,
-      unsigned int nb_frames)
+count(const char *filename, unsigned int height, unsigned int width,
+    int yuv_mode, unsigned int nb_frames)
 {
 	struct yuv_file *ret;
 	struct stat st;
@@ -186,7 +186,7 @@ count(char *filename, unsigned int height, unsigned int width, int yuv_mode,
 }
 
 int
-cut(char *filename, unsigned int height, unsigned int width,
+cut(const char *filename, unsigned int height, unsigned int width,
     unsigned int nb_frames, int yuv_mode, struct yuv_file *video)
 {
 	FILE *yuvfile;
@@ -265,7 +265,7 @@ close_fd:
 }
 
 int
-check_yuvfile(char *filename)
+check_yuvfile(const char *filename)
 {
 	char *ext;
 	int tmp;
@@ -282,9 +282,9 @@ check_yuvfile(char *filename)
 }
 
 void
-print_options(char *filename, unsigned int height, unsigned int width,
-	      unsigned int nb_frames, int yuv_mode, int countflag,
-	      unsigned int frame_count)
+print_options(const char *filename, unsigned int height, unsigned int width,
+    unsigned int nb_frames, int yuv_mode, int countflag,
+    unsigned int frame_count)
 {
 
 	(void)printf("           Input file name: %s\n", filename);

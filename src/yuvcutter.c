@@ -39,6 +39,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
+#include <strings.h>
 #include <getopt.h>
 
 #include <sys/types.h>

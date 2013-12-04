@@ -5,14 +5,15 @@ RONN=ronn
 TEST=test
 
 CC ?= gcc
-CFLAGS ?= -O2
-LDFLAGS +=
-CFDEBUG = -O0 -g3 -pedantic -Wall -Wextra -Wconversion -Wstrict-prototypes \
+CFLAGS ?= -std=c89 -Wall -Wextra -pedantic -Wconversion -Wstrict-prototypes \
 		  -Wcast-qual -Wcast-align -Wshadow -Wredundant-decls -Wundef \
 		  -Wfloat-equal -Wmissing-include-dirs -Wswitch-default -Wswitch-enum \
 		  -Wpointer-arith -Wbad-function-cast -Wnested-externs \
-		  -Wold-style-definition -Wsign-conversion -Wlogical-op \
-		  -Wno-long-long -pipe -Wunreachable-code
+		  -Wold-style-definition -Wformat=2 -Winit-self -Wwrite-strings \
+		  -Wmissing-prototypes -Wsign-conversion -Wdouble-promotion \
+		  -Wlogical-op -Wjump-misses-init -pipe
+LDFLAGS +=
+CFDEBUG ?= ${CFLAGS} -g3 -ggdb3 -Wpadded -Wpacked
 
 EXEC = yuvcutter
 VERSION = 0.3.1

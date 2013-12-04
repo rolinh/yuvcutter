@@ -61,7 +61,7 @@ main(int argc, char *argv[])
 	unsigned int height = 1080;
 	unsigned int nb_frames = 1;
 	int yuv_mode = 420;
-	char *filename = "input.yuv";
+	const char *filename = "input.yuv";
 	struct yuv_file *video;
 
 	if (argv[1] && argv[1][0] != '-') {

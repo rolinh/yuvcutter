@@ -268,7 +268,6 @@ int
 check_yuvfile(const char *filename)
 {
 	char *ext;
-	int tmp;
 
 	ext = strrchr(filename, '.');
 

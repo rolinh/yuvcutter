@@ -37,7 +37,7 @@
  * Header file for yuvcutter.c
  */
 
-#define VERSION "0.3.1"
+#define VERSION "0.3.2"
 
 struct yuv_file {
 	unsigned int frame_count;

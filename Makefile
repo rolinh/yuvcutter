@@ -16,7 +16,7 @@ LDFLAGS +=
 CFDEBUG ?= ${CFLAGS} -g3 -ggdb3 -Wpadded -Wpacked
 
 EXEC = yuvcutter
-VERSION = 0.3.1
+VERSION = 0.3.2
 
 MAN=man
 MAN1=man1
